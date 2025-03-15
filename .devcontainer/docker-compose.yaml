@@ -1,0 +1,42 @@
+version: "3.9"
+services:
+  cli:
+    build: cli
+    volumes:
+      - ..:/workspaces/laravel
+
+  fpm:
+    build: fpm
+    volumes:
+      - ..:/workspaces/laravel
+    user: 1000:1000
+
+  nginx:
+    build: nginx
+    volumes:
+      - ..:/workspaces/laravel
+    ports:
+      - 80:80
+    depends_on:
+      - fpm
+
+  postgres:
+    image: postgres
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"  # Porta exposta para acesso de fora do contêiner
+      # POSTGRES_DB: laravel
+      # POSTGRES_USER: root
+      # POSTGRES_HOST_AUTH_METHOD: trust
+
+  redis:
+    image: redis:7.2-alpine
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
