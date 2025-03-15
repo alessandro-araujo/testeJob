@@ -1,89 +1,64 @@
-# 📚 Sistema de Gestão de Notas
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-## 📌 Sobre o Projeto
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-Este sistema permite a gestão de notas de alunos vinculados a professores, proporcionando uma interface amigável para visualização, upload e análise de dados acadêmicos.
+## Documentation
 
-## 🚀 Funcionalidades
+## ➡️ Requisitos.
 
-### 🔐 Autenticação
+- **Docker** 27.5.1 ou superior
+- **DevContainer** Extencion VSCODE
 
-- Cadastro e login de usuários.
-- Perfis de acesso:
-  - **Aluno**: Pode visualizar apenas suas notas, média e situação.
-  - **Professor**: Pode visualizar todas as notas dos alunos vinculados a ele.
 
-### 📂 Gerenciamento de Usuários
+## ➡️ Usando o projeto pela **primeira vez**.
+### Inicie o projeto no DevContainer
+* Portas como **(80/9000/5432/8080)** devem estar disponiveis.
 
-- Cadastro de novos usuários:
-  - **Aluno**: Deve ser vinculado a um professor no momento do cadastro ou posteriormente.
-  - **Professor**: Deve ser vinculado a uma diretoria no momento do cadastro ou posteriormente.
-- Lista de alunos sem professor associado:
-  - Contador de alunos sem cadastro.
-  - Possibilidade de atribuição de professor.
-  - Edição do cadastro de alunos e associação com um professor.
+### O arquivo **.env** já esta configurado.
 
-### 📤 Upload e Download de Planilhas
-
-- **Download de modelo** de planilha para preenchimento.
-- **Upload de planilha** com notas dos alunos:
-  - Cálculo automático da nota total e média.
-  - "Nota Prova Final" com peso 2.
-  - Verificação de alunos já existentes:
-    - Importação de novos alunos normalmente.
-    - Exibição de lista com alunos repetidos para atualização seletiva.
-    - Exibição de mensagem informando quantos alunos tiveram notas atualizadas.
-
-### 📊 Dashboard e Relatórios
-
-- **Gráfico de Pizza**: Percentual de alunos aprovados e reprovados (média ≥ 7).
-- **Gráfico de Barras**: Média geral dos alunos por professor.
-- **Gráfico de Barras Avançado**: Número de alunos por professor com linha indicando % de aprovados.
-
-## 📝 Regras de Negócio
-
-- Médias arredondadas para cima com apenas 1 casa decimal.
-- Aceita upload apenas de arquivos Excel nos formatos: `.xls`, `.xlsx`, `.xlsm`.
-
-## 🔧 Tecnologias Utilizadas
-
-- **Back-end**: Laravel
-- **Front-end**: Laravel, React, Livewire, Vue, CSS, BOOTSTRAP (A VONTADE )
-- **Banco de Dados**: PODE SER SQLite no Laravel ou MySQL ( em caso de MySQL gerar um Container no Docker )
-
-## 🚀 Como Rodar o Projeto
-
-```sh
-# Clone este repositório
-git clone [https://github.com/seuusuario/seuprojeto.git](https://github.com/eduardojc/testeJob.git)
-
-# Entre no diretório do projeto
-cd testeJob
-
-# Execute a aplicação
-[ No terminal para gerar o SQLITE: ]
-
-touch database/database.sqlite
-
-Edite o arquivo .env e altere as configurações do banco de dados para:
-
-DB_CONNECTION=sqlite
-DB_DATABASE=${DB_DATABASE_PATH}/database.sqlite
-DB_FOREIGN_KEYS=true
-
+### Instalando depêdencias
+- **Instale as depêndencias:**
+```shell
+composer install
+```
+### Instalando **Packages NPM**
+```shell
+npm install
 ```
 
-## 🤝 Contribuição
+### Criando banco de dados
+- **Executar as migrations**
+* Após configurar o .env, execute:
+```shell
+php artisan migrate
+```
+* Obs: Caso, não tenha um banco, `laravel`, digite sim:
+```shell
+WARN  The database 'laravel' does not exist on the 'mysql' connection.
+Would you like to create it? (yes/no) [yes]
+❯ yes
+```
 
-Contribuições são bem-vindas! Siga os passos:
+### Inicie o **Job** para hospedar as planilhas. 
+```shell
+php artisan queue:work --queue=SpreadsheetJob
+```
 
-1. Faça um **fork** do repositório
-2. Crie uma **branch** para sua feature (`git checkout -b minha-feature`)
-3. Faça o **commit** (`git commit -m 'Adicionando uma nova feature'`)
-4. Envie para o repositório (`git push origin minha-feature`)
-5. Abra um **Pull Request**
+- **Entre no sistema e crie seu cadastro.**
+    - **Acesse: [http://localhost/](http://localhost/)**
 
----
+- **Entre no adminer.**
+    - **Acesse: [http://localhost:8080](http://localhost:8080)**
 
-Feito com ❤️ por [Eduardo Jose Christofoletti](https://github.com/eduardojc) 🚀
+## Security Vulnerabilities
 
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+
+## License
+
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
